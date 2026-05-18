@@ -22,8 +22,7 @@ export const botConfig = {
     // 3 = Watching
     // 4 = Custom
     // 5 = Competing
-    activities: [
-      {
+    activities: {
         // Text users will see (example: "Playing /help | Titan Bot").
         name: "San Andreas Multiplayer",
         name: "Spotify",

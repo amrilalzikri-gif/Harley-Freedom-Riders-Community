@@ -3,7 +3,7 @@ from discord.ext import commands
 import os
 
 # Konfigurasi Bot
-TOKEN = "MASUKKAN_TOKEN_DISCORD_ANDA_DI_SINI"  # Ganti dengan token asli di file .env atau langsung di sini
+TOKEN = "MTUwNTUwMDIzODM1MjIyMDI3MA.Gx3Sdw.Oy7zf2TQXIrlaVndmjzh0MmoOlSkKrFFuy0TJ4"  # Ganti dengan token asli di file .env atau langsung di sini
 GUILD_ID = 1490723872431931583
 CLIENT_ID = 1505500238352220270
 

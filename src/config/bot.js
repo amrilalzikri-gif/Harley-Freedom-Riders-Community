@@ -27,6 +27,34 @@ activities: [
   { name: "Spotify", type: 2 },
   { name: "Windah Basudara", type: 3 }
     ],
+import { logger } from '../utils/logger.js';
+
+export const botConfig = {
+  // =========================
+  // BOT PRESENCE (what users see under the bot name)
+  // =========================
+  // `status` options:
+  // - "online"    = green dot
+  // - "idle"      = yellow moon
+  // - "dnd"       = red do-not-disturb
+  // - "invisible" = appears offline
+  presence: {
+    // Current online state shown on Discord.
+    status: "online",
+
+    // Activity lines shown under the bot name.
+    // `type` number mapping from Discord:
+    // 0 = Playing
+    // 1 = Streaming
+    // 2 = Listening
+    // 3 = Watching
+    // 4 = Custom
+    // 5 = Competing
+    activities: [
+      { name: "San Andreas Multiplayer", type: 0 },
+      { name: "Spotify", type: 2 },
+      { name: "Windah Basudara", type: 3 }
+    ],
   },
 
   // =========================
@@ -343,10 +371,10 @@ activities: [
     maxAuditMetadataBytes: 4096,
     // Maximum number of audit entries kept in memory.
     maxInMemoryAuditEntries: 1000,
-  // If true, log every verification action.
-  logAllVerifications: true,
-  // If true, preserve verification audit history.
-  keepAuditTrail: true,
+    // If true, log every verification action.
+    logAllVerifications: true,
+    // If true, preserve verification audit history.
+    keepAuditTrail: true,
   },
 
   // =========================
@@ -460,10 +488,8 @@ activities: [
   },
 };
 
-
 export function validateConfig(config) {
   const errors = [];
-
   
   if (process.env.NODE_ENV !== 'production') {
     logger.debug('Environment variables check:');
@@ -482,7 +508,6 @@ export function validateConfig(config) {
   if (!process.env.CLIENT_ID) {
     errors.push("Client ID is required (CLIENT_ID environment variable)");
   }
-
   
   if (process.env.NODE_ENV === 'production') {
     if (!process.env.POSTGRES_HOST) {
@@ -499,7 +524,6 @@ export function validateConfig(config) {
   return errors;
 }
 
-
 const configErrors = validateConfig(botConfig);
 if (configErrors.length > 0) {
   logger.error("Bot configuration errors:", configErrors.join("\n"));
@@ -508,14 +532,11 @@ if (configErrors.length > 0) {
   }
 }
 
-
 export const BotConfig = botConfig;
 
 export function getColor(path, fallback = "#99AAB5") {
-  
   if (typeof path === "number") return path;
   if (typeof path === "string" && path.startsWith("#")) {
-    
     return parseInt(path.replace("#", ""), 16);
   }
   const result = path
@@ -525,7 +546,6 @@ export function getColor(path, fallback = "#99AAB5") {
       botConfig.embeds.colors,
     );
   
-  // Convert the result to integer if it's a hex string
   if (typeof result === "string" && result.startsWith("#")) {
     return parseInt(result.replace("#", ""), 16);
   }
@@ -540,7 +560,3 @@ export function getRandomColor() {
 }
 
 export default botConfig;
-
-
-
-

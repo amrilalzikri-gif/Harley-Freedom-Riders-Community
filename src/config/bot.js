@@ -22,31 +22,10 @@ export const botConfig = {
     // 3 = Watching
     // 4 = Custom
     // 5 = Competing
-    const activities = [
-    {
-        name: "San Andreas Multiplayer",
-        type: 0,
-    },
-    {
-        name: "Spotify",
-        type: 2,
-    },
-    {
-        name: "Windah Basudara",
-        type: 3,
-    },
-];
-
-let i = 0;
-
-setInterval(() => {
-    client.user.setPresence({
-        status: "online",
-        activities: [activities[i]],
-    });
-
-    i = (i + 1) % activities.length;
-}, 10000); // ganti setiap 10 detik
+activities: [
+  { name: "San Andreas Multiplayer", type: 0 },
+  { name: "Spotify", type: 2 },
+  { name: "Windah Basudara", type: 3 }
     ],
   },
 

@@ -5,7 +5,7 @@ import express from 'express';
 import cron from 'node-cron';
 
 import config from './config/application.js';
-import { botConfig } from './config/bot.js'; // Menyesuaikan path impor ke tempat bot.js berada di struktur folder asli
+import { botConfig } from './config/bot.js'; 
 import { initializeDatabase } from './utils/database.js';
 import { getGuildConfig } from './services/guildConfig.js';
 import { getServerCounters, saveServerCounters, updateCounter } from './services/serverstatsService.js';
@@ -82,7 +82,7 @@ class TitanBot extends Client {
       await this.registerCommands();
       startupLog('Slash commands registration complete');
       
-      // Memicu sistem rotasi aktivitas status bot
+      // Mengaktifkan perputaran status bot otomatis
       this.setupPresenceRotation();
 
       const databaseMode = dbStatus.isDegraded
@@ -100,7 +100,7 @@ class TitanBot extends Client {
     }
   }
 
-  // Sistem rotasi status otomatis yang aman
+  // Rotasi status otomatis yang aman dari pembatasan API Discord
   setupPresenceRotation() {
     this.once('ready', () => {
       const pConfig = botConfig?.presence;
@@ -121,7 +121,7 @@ class TitanBot extends Client {
         });
 
         currentIndex = (currentIndex + 1) % pConfig.activities.length;
-      }, 15000); // 15 detik adalah jeda aman agar API Discord tidak memblokir bot Anda
+      }, 15000); 
     });
   }
 
@@ -364,4 +364,4 @@ try {
 }
 
 export default TitanBot;
-      
+          

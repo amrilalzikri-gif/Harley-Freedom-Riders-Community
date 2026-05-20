@@ -2,15 +2,10 @@ import { logger } from '../utils/logger.js';
 
 export const botConfig = {
   // =========================
-  // BOT PRESENCE (what users see under the bot name)
+  // BOT PRESENCE (Status kehadiran bot di Discord)
   // =========================
   presence: {
-    // Current online state shown on Discord.
     status: "online",
-
-    // Activity lines shown under the bot name.
-    // `type` number mapping from Discord:
-    // 0 = Playing, 2 = Listening, 3 = Watching
     activities: [
       { name: "San Andreas Multiplayer", type: 0 },
       { name: "Spotify", type: 2 },
@@ -312,4 +307,3 @@ export function getRandomColor() {
 }
 
 export default botConfig;
-      

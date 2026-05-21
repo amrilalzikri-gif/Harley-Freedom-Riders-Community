@@ -82,7 +82,7 @@ class TitanBot extends Client {
       await this.registerCommands();
       startupLog('Slash commands registration complete');
       
-      // Mengaktifkan perputaran status bot otomatis
+      // Mengaktifkan sistem rotasi status kehadiran secara berkala
       this.setupPresenceRotation();
 
       const databaseMode = dbStatus.isDegraded
@@ -100,28 +100,39 @@ class TitanBot extends Client {
     }
   }
 
-  // Rotasi status otomatis yang aman dari pembatasan API Discord
+  // Sistem Perputaran Aktivitas Status Otomatis Aman (Jeda 15 Detik)
   setupPresenceRotation() {
     this.once('ready', () => {
       const pConfig = botConfig?.presence;
+      
       if (!pConfig || !pConfig.activities || pConfig.activities.length === 0) {
-        logger.warn('Konfigurasi aktivitas tidak ditemukan di bot.js.');
+        logger.warn('Konfigurasi list aktivitas tidak ditemukan di bot.js atau kosong.');
         return;
       }
 
       let currentIndex = 0;
-      logger.info('Sistem rotasi status otomatis aktif (Berputar setiap 15 detik).');
+      logger.info(`Sistem rotasi status aktif. Memutar ${pConfig.activities.length} baris aktivitas.`);
 
-      setInterval(() => {
+      const setBotStatus = () => {
         const currentActivity = pConfig.activities[currentIndex];
-
+        
         this.user.setPresence({
-          activities: [{ name: currentActivity.name, type: currentActivity.type }],
+          activities: [{ 
+            name: currentActivity.name, 
+            type: currentActivity.type 
+          }],
           status: pConfig.status || 'online',
         });
 
+        // Geser ke indeks daftar status berikutnya
         currentIndex = (currentIndex + 1) % pConfig.activities.length;
-      }, 15000); 
+      };
+
+      // Jalankan langsung komponen status pertama tanpa menunggu interval pertama
+      setBotStatus();
+
+      // Interval diset otomatis ke 15000 ms (15 detik) untuk menghindari pemblokiran Discord Rate Limit
+      setInterval(setBotStatus, 15000); 
     });
   }
 
@@ -364,4 +375,3 @@ try {
 }
 
 export default TitanBot;
-          

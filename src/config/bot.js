@@ -7,9 +7,9 @@ export const botConfig = {
   presence: {
     status: "online",
     activities: [
-      { name: "San Andreas Multiplayer", type: 0 },
-      { name: "Spotify", type: 2 },
-      { name: "Windah Basudara", type: 3 }
+      { name: "Live Free, Ride Free", type: 0 },         // Playing
+      { name: "Harley Freedom Riders", type: 2 },       // Listening
+      { name: "San Andreas Multiplayer", type: 3 }       // Watching
     ],
   },
 

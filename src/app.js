@@ -136,7 +136,41 @@ class TitanBot extends Client {
     });
   }
 
-  startWebServer() {
+  // Sistem Perputaran Aktivitas Status Otomatis Aman (Jeda 15 Detik)
+  setupPresenceRotation() {
+    const pConfig = botConfig?.presence;
+    
+    if (!pConfig || !pConfig.activities || pConfig.activities.length === 0) {
+      logger.warn('Konfigurasi list aktivitas tidak ditemukan di bot.js atau kosong.');
+      return;
+    }
+
+    let currentIndex = 0;
+    logger.info(`Sistem rotasi status aktif. Memutar ${pConfig.activities.length} baris aktivitas.`);
+
+    const setBotStatus = () => {
+      const currentActivity = pConfig.activities[currentIndex];
+      
+      this.user.setPresence({
+        activities: [{ 
+          name: currentActivity.name, 
+          type: currentActivity.type 
+        }],
+        status: pConfig.status || 'online',
+      });
+
+      // Geser ke indeks daftar status berikutnya
+      currentIndex = (currentIndex + 1) % pConfig.activities.length;
+    };
+
+    // Jalankan langsung komponen status pertama
+    setBotStatus();
+
+    // Interval diset otomatis ke 15000 ms (15 detik) untuk menghindari pemblokiran Discord Rate Limit
+    setInterval(setBotStatus, 15000); 
+  }
+ 
+ startWebServer() {
     const app = express();
     const configuredPort = Number(this.config.api?.port || process.env.PORT || 3000);
     const maxPortRetryAttempts = Number(process.env.PORT_RETRY_ATTEMPTS || 5);
